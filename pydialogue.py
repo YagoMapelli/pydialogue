@@ -18,9 +18,9 @@ class Dialogue:
         #name: [0 - function, 1 - start_option_marker, 2 - end_option_marker]
 
     def ask_dialogue(self):
-        print(self.initial_text)
+        print(self.initial_text, end="")
         for key in self.options:
-            print(f"{self.options[key][1]}{key}{self.options[key][2]}")
+            print(f"{self.options[key][1]}{key}{self.options[key][2]}", end="")
         print(self.final_text)
 
 #--------------------------------------------------------------------------Input:
@@ -51,7 +51,7 @@ class ListDialogue:
     def ask_dialogue(self):
         print(self.initial_text)
 
-        for i in range(1, self.options):
+        for i in range(len(self.options)):
             print(f"{i + 1} - {self.options[i + 1][0]}")
 
         if self.final_text != "":
@@ -77,3 +77,22 @@ class ListDialogue:
             else:
                 print(self.error_text)
             if not self.is_loop: break
+
+def opção1_function():
+    print("opção 1 foi selecionada")
+
+def opção2():
+    print("opção 2 foi selecionada")
+
+main = Dialogue(initial_text="escolha uma opção", final_text=":", input_text=">>>", is_loop=False, start_option_markers="(", end_option_markers=")")
+main.add_option("opção 1", opção1_function, "[", end_option_marker="]")
+main.add_option("opção 2", opção2)
+main.ask_dialogue()
+
+lista = ListDialogue("escolha uma das opções:", final_text="n, n tem o 3", input_text=">>>>", is_loop=True)
+lista.add_option("opção 1", opção1_function)
+lista.add_option("opção 2", opção2)
+lista.ask_dialogue()
+
+from time import sleep
+sleep(4)
